@@ -10,4 +10,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function __construct()
+    {
+        /* this array isn't necessary for the one page, however, more could be added later */
+        $nav = [
+            'main' => 'Main',
+        ];
+    }
 }

@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 
 class WordCloudController extends Controller
 {
-    public function home()
+
+    public function index()
     {
-        return 'not much going on right now...';
+        return view('wordcloud.index');
     }
 
 }
