@@ -6,7 +6,6 @@
 
 Route::get('/', 'PageController@welcome');
 
-// Route::get('/', 'PageController@create');
-
-Route::get('/', 'PageController@about');
-// Route::get('/', 'PageController@contact');
+Route::get('/create', 'PageController@create');
+Route::get('/about', 'PageController@about');
+Route::get('/contact', 'PageController@contact');

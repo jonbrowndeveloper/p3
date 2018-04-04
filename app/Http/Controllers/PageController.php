@@ -12,9 +12,9 @@ class PageController extends Controller
         return view('welcome');
     }
 
-    public function index()
+    public function create()
     {
-        return view('create');
+        return view('wordcloud.create');
     }
 
     public function about()
