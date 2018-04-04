@@ -2,6 +2,11 @@
 
 return [
 
+    // thought it would be neat to add this config functionality in
+    // this email is not active...
+
+    'supportEmail' => 'help@wordcloudbuilder.me',
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

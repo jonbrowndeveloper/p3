@@ -17,14 +17,18 @@
 <body>
 
 <header>
-    <div class="title m-b-md">
-        Word Cloud Builder
+    <div class='container-fluid'>
+         <div class="title m-b-md">
+            Word Cloud Builder
+         </div>
     </div>
     @include('modules.nav')
 </header>
 
 <section id='main'>
+    <div class='container-fluid'>
     @yield('content')
+    </div>
 </section>
 
 <footer>
@@ -32,7 +36,6 @@
 </footer>
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-
 
 @stack('body')
 
