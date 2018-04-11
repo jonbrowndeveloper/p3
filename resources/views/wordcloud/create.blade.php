@@ -11,20 +11,22 @@
 
                 <!-- Input text area -->
 
-                <form method='POST' action='create'>
+                <form method='POST' action='\wordcloud\create'>
                     {{ csrf_field() }}
 
                     <div class="form-group">
                         <br>
                         <textarea class="form-control"
                                   name='inputTextArea' id='inputTextArea'
-                                  rows="16">{{ old('inputTextArea') }}</textarea>
+                                  rows="16" placeholder='Paste or Type your text here...'>@if (isset($inputText)){{ $inputText }}@endif</textarea>
                         <p id="passwordHelpBlock" class="form-text text-muted">
-                            Paste in any text that contains letters and numbers that is under 500 words.
+
+                            Input any text that contains letters and numbers that is under 500 words.
                         </p>
+                        @include('modules.error-field', ['field' => 'inputTextArea'])
                     </div>
                     <label>
-                        <input type='checkbox' name='alphabeticalCheck' value='1'>
+                        <input type='checkbox' name='alphabeticalCheck' value='1' {{ $alphabeticalChecked or '' }}>
                         Alphabetical
                     </label>
                     <div class="form-check">
@@ -38,7 +40,11 @@
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="numberOfWords" value="25">
+                        <input class="form-check-input"
+                               type="radio"
+                               name="numberOfWords"
+                               value="25"
+                               {{ $numberOfWords25 or '' }}>
                         <label class="form-check-label">
                             25 most important words
                         </label>
@@ -47,7 +53,8 @@
                         <input class="form-check-input"
                                type="radio"
                                name="numberOfWords"
-                               value="50">
+                               value="50"
+                               {{ $numberOfWords50 or '' }}>
                         <label class="form-check-label">
                             50 most important words
                         </label>
@@ -65,9 +72,24 @@
             <div class='col'>
                 <br>
                 <div class="container">
-                @if(isset($inputText))
-                    {{ $inputText }}
-                @endif
+                    @if (isset($uniqueArrayFinal))
+                    <br>
+                    <div class="container">
+                        @foreach ($uniqueArrayFinal as $wordsFinals => $wordFinal)
+                        <span style='color:black;font-size:{{ $uniqueArrayFinal[$wordsFinals]['fontSize'] }}px'>
+                        {{ $uniqueArrayFinal[$wordsFinals]['word'] }}
+                            @if (is_int($wordsFinals/$breakMultiple))
+                            <br>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+                    @elseif (!isset($uniqueArrayFinal))
+                    <br>
+                    <div class="container">
+                        Your text will appear here...
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>

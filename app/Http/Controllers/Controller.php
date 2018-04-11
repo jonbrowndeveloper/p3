@@ -14,12 +14,30 @@ class Controller extends BaseController
 
     public function __construct()
     {
-        /* this array isn't necessary for the one page, however, more could be added later */
-        $nav = [
-            'create' => 'Create',
+            /* first element of the array is the filepath with regards to the project. Backslash is included*/
+            $nav = [
+            'wordcloud\create' => 'Create',
             'about' => 'About',
             'contact' => 'Contact',
         ];
         View::share(['nav' => $nav]);
+    }
+
+    // custom usort function to compare the 'number' int within the importance array
+
+    public static function numberCompare($first, $second)
+    {
+        if ($first['number'] == $second['number']) {
+            return 0;
+        }
+
+        return ($first['number'] < $second['number'] ? 1 : -1);
+    }
+
+    // another custom usort function used to sort the final array
+
+    public static function stringCompare($a, $b)
+    {
+        return strcasecmp($a['word'], $b['word']);
     }
 }

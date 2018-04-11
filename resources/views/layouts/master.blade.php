@@ -31,10 +31,6 @@
     </div>
 </section>
 
-<footer>
-    <a href='http://github.com/jonbrowndeveloper/p3'><i class='fa fa-github'></i> View on Github</a>
-</footer>
-
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
 @stack('body')

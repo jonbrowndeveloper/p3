@@ -18,12 +18,52 @@ class WordCloudController extends Controller
     public function createWordCloud(Request $request)
     {
         # Extract data from the request
-        $inputText = $request->input('inputText');
-        $alphabetical = $request->input('alphabeticalCheck');
+        $inputText = $request->input('inputTextArea');
+
+        $this->validate($request,
+        [
+            'inputTextArea' => 'required',
+        ]);
 
         // for display use
+        // the in-line blade syntax does not seem to be working in the display file.
+        // therefore I put the logic for the radial buttons and check box here
 
         $numberOfWords = $request->input('numberOfWords');
+
+        // three variables for the different number of words options
+
+        $numberOfWords10 = '';
+        $numberOfWords25 = '';
+        $numberOfWords50 = '';
+
+        // for adding in a html break to make the word cloud more cloud like
+
+        $breakMultiple = 0;
+
+        if ($numberOfWords == '10') {
+            $breakMultiple = 4;
+            $numberOfWords10 = 'checked';
+        } else if ($numberOfWords == '25') {
+            $breakMultiple = 5;
+            $numberOfWords25 = 'checked';
+        } else if ($numberOfWords == '50') {
+            $breakMultiple = 7;
+            $numberOfWords50 = 'checked';
+        }
+
+        $alphabetical = $request->input('alphabeticalCheck');
+
+        $alphabeticalChecked = '';
+
+        if ($alphabetical == '1')
+        {
+            $alphabeticalChecked = 'checked';
+        }
+
+        // Strip punctuation
+
+        $inputText = preg_replace('/[[:punct:]]/', '', $inputText);
 
         # Text Body logic
 
@@ -53,18 +93,7 @@ class WordCloudController extends Controller
             }
         }
 
-        // custom usort function to compare the 'number' int within the importance array
-
-        function numberCompare($first, $second)
-        {
-            if ($first['number'] == $second['number']) {
-                return 0;
-            }
-
-            return ($first['number'] < $second['number'] ? 1 : -1);
-        }
-
-        usort($importanceArray, array("App\Http\Controllers\WordCloudController","numberCompare"));
+        usort($importanceArray, ["App\Http\Controllers\Controller", "numberCompare"]);
 
         // set number of important words to user defined number
 
@@ -98,20 +127,24 @@ class WordCloudController extends Controller
                 }
             }
         }
+        // sort alphabetically if needed
 
-        // another custom usort function used to sort the final array
-
-        function stringCompare($a, $b)
-        {
-            return strcasecmp($a['word'], $b['word']);
+        if ($alphabetical) {
+            usort($uniqueArrayFinal, ["App\Http\Controllers\Controller", "stringCompare"]);
         }
 
-        // TODO: ADD ALPHABETICAL FUNCTION
+        // Log::info('Add the text ' . $inputText);
 
-        Log::info('Add the text ' . print_r($uniqueArrayFinal, true) );
-
-        return redirect('/create')->with([
-            'inputText' => $inputText
+        return view('wordcloud.create')->with([
+            'inputText' => $inputText,
+            'numberOfWords' => $numberOfWords,
+            'alphabetical' => $alphabetical,
+            'numberOfWords10' => $numberOfWords10,
+            'numberOfWords25' => $numberOfWords25,
+            'numberOfWords50' => $numberOfWords50,
+            'alphabeticalChecked' => $alphabeticalChecked,
+            'uniqueArrayFinal' => $uniqueArrayFinal,
+            'breakMultiple' => $breakMultiple,
         ]);
     }
 }
