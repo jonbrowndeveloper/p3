@@ -14,8 +14,8 @@ class Controller extends BaseController
 
     public function __construct()
     {
-            /* first element of the array is the filepath with regards to the project. Backslash is included*/
-            $nav = [
+        /* first element of the array is the filepath with regards to the project. Backslash is included*/
+        $nav = [
             'wordcloud\create' => 'Create',
             'about' => 'About',
             'contact' => 'Contact',

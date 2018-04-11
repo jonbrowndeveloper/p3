@@ -20,10 +20,12 @@ class WordCloudController extends Controller
         # Extract data from the request
         $inputText = $request->input('inputTextArea');
 
+        // Validation
+
         $this->validate($request,
-        [
-            'inputTextArea' => 'required',
-        ]);
+            [
+                'inputTextArea' => 'required',
+            ]);
 
         // for display use
         // the in-line blade syntax does not seem to be working in the display file.
@@ -56,8 +58,7 @@ class WordCloudController extends Controller
 
         $alphabeticalChecked = '';
 
-        if ($alphabetical == '1')
-        {
+        if ($alphabetical == '1') {
             $alphabeticalChecked = 'checked';
         }
 
