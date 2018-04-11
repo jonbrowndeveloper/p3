@@ -11,7 +11,7 @@
 
                 <!-- Input text area -->
 
-                <form method='POST' action='\wordcloud\create'>
+                <form method='POST' action='/wordcloud/create'>
                     {{ csrf_field() }}
 
                     <div class="form-group">
